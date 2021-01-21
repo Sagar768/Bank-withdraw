@@ -1,0 +1,53 @@
+package bank;
+
+public class insufficientBalanceException extends RuntimeException
+{
+	private String msg;
+	public insufficientBalanceException(String msg)
+	{
+		this.msg=msg;
+	}
+	@Override
+	public String getMessage()
+	{
+		return msg;
+	}
+}
+
+class bankTransaction
+{
+	public void balanceValidation(double availableBalance,double withDrawAmount)
+	{
+		if(availableBalance>withDrawAmount)
+		{
+			System.out.println("Withdraw successfull");
+			System.out.println("Please collect the cash");
+			availableBalance=availableBalance-withDrawAmount;
+		}
+		else
+		{
+			try
+			{
+				throw new insufficientBalanceException("Insufficient balance");
+			}
+			catch(insufficientBalanceException a)
+			{
+				System.out.println(a.getMessage());
+			}
+			System.out.println("Available balance: "+availableBalance);
+		}
+	}
+}
+
+
+
+package bank;
+
+public class main
+{
+	public static void main(String[] args)
+	{
+		bankTransaction bt=new bankTransaction();
+	    bt.balanceValidation(10000,5000);
+	    }		
+}
